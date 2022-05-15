@@ -1,30 +1,19 @@
 <?php
 include 'conexao.php';
+include 'Class/user.php';
+include 'Controllers/crud_controller.php';
 
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$nomejogo = $_POST['nomejogo'];
-$descricao = $_POST['descricao'];
-$horas = $_POST['horas'];
+$User = new User();
+$crud = new CRUD();
 
+$User->nome = $_POST['nome'];
+$User->cpf = $_POST['cpf'];
+$User->nomejogo = $_POST['nomejogo'];
+$User->descricao = $_POST['descricao'];
+$User->horas = $_POST['horas'];
 
-
-
-//Inserir dados do formulário
-$sql = "INSERT INTO jogador ( `nome`, `cpf`, `nomejogo`, `descricao`, `horas`) ";
-$sql = $sql."VALUES ('".$nome."', ".$cpf.", '".$nomejogo."', '".$descricao ."', ".$horas.")";
-
-
-//Verifica se foi feito a conexão com o banco
-if(!mysqli_query($conexao,$sql)){
-    echo "Error: " . $sql . "<br>" . mysqli_error($conexao);
-} 
-
-//Mostra valor atualizado
-$result = mysqli_query($conexao, "SELECT * FROM jogador;");
-
-// Fechar a conexão
-mysqli_close($conexao);
+$crud->create($conexao,$User);
+$result = $crud->read($conexao);
 
 ?>
 

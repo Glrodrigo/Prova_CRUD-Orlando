@@ -1,22 +1,16 @@
 <?php
 include 'conexao.php';
+include 'Class/user.php';
+include 'Controllers/crud_controller.php';
 
-$cpf = $_POST['cpf'];
-$horas= $_POST['horas'];
+$User = new User();
+$crud = new CRUD();
 
+$User->cpf = $_POST['cpf'];
+$User->horas = $_POST['horas'];
 
-//Atualizar dados do formulário
-$sql = "UPDATE jogador SET horas = ('".$horas ."') WHERE cpf = ('".$cpf ."')";
-$verif = "SELECT count(*) resultado FROM jogador WHERE cpf = ('".$cpf ."')";
-
-//Verifica se foi feito a conexão com o banco
-if(!mysqli_query($conexao,$sql)){
-    echo "Error: " . $sql . "<br>" . mysqli_error($conexao);
-}
-//Mostra valor atualizado
-$result = mysqli_query($conexao, "SELECT * FROM jogador;");
-// Fechar a conexão
-mysqli_close($conexao);
+$crud->update($conexao,$User);
+$result = $crud->read($conexao);
 
 ?>
 

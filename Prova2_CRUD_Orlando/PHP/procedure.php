@@ -1,11 +1,14 @@
 <?php
     include 'conexao.php';
-    //Verifica se tem valor no formulário
-    if(isset($_POST['quantidade'])){
-        $qtde = $_POST['quantidade'];
-        //Comando chama a procedure
-        $result = mysqli_query($conexao, "CALL Selecionar_jogador('".$qtde."');");  
-    }
+    include 'Class/user.php';
+    include 'Controllers/crud_controller.php';
+
+    $User = new User();
+    $crud = new CRUD();
+
+    $User->qtde = $_POST['quantidade'];
+
+    $result = $crud->procedure($conexao,$User);
 ?>
 
 
